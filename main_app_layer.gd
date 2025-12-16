@@ -1,3 +1,4 @@
+@icon("img/img_Icon_MainAppLayer_32x32px.png")
 @tool
 class_name MainAppLayer
 extends Control

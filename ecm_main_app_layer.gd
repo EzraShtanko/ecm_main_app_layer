@@ -3,20 +3,12 @@ extends EditorPlugin
 
 
 func _enable_plugin() -> void:
-	# Add autoloads here.
 	pass
-
 
 func _disable_plugin() -> void:
-	# Remove autoloads here.
 	pass
-
 
 func _enter_tree() -> void:
-	# Initialization of the plugin goes here.
-	pass
-
-
+	add_custom_type("MainAppLayer", "Control", preload("main_app_layer.gd"), preload("img/img_Icon_MainAppLayer_32x32px.png"))
 func _exit_tree() -> void:
-	# Clean-up of the plugin goes here.
-	pass
+	remove_custom_type("MainAppLayer")
