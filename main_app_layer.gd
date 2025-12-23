@@ -13,6 +13,7 @@ signal concealed
 @export var t_fade_in: float = 1.
 @export var t_fade_out: float = 1.
 
+var ccp: CustomConsolePrinter = CustomConsolePrinter.new()
 
 var curtain: ColorRect:
 	get:
@@ -44,7 +45,10 @@ var reconfig: Reconfig = Reconfig.new(self)
 
 
 func _ready() -> void: 
-	#if not ready.is_connected(on_ready): ready.connect(on_ready)
+	ccp.title 		= name
+	ccp.padding 		= 110
+	ccp.flag_bold	= true
+	ccp.color		= "orange"
 	
 	if not get_children().any( func (x: Node) : return (x is ColorRect) and x.name == "Curtain"):
 		var nc := ColorRect.new()
@@ -91,20 +95,17 @@ func _ready() -> void:
 	get_viewport().size_changed.connect(_on_viewport_size_changed)
 	_on_viewport_size_changed()
 
-func on_ready() -> void:
-	pass
-
 
 func _physics_process(_delta: float) -> void:
 	if is_node_ready(): reconfig.process()
 
 
 func _reveal() -> void:
-	if Engine.is_editor_hint(): return
+	if not is_node_ready(): await ready
 	if tween_fade: tween_fade.kill()
 	tween_fade = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).set_parallel(false)
 	
-	print("revealing %s" % name)
+	ccp.log_oh("revealing")
 	
 	shroud.visible = true
 	tween_fade.tween_property(shroud, ^"modulate:a", 1., t_fade_in / 2.)
@@ -113,10 +114,11 @@ func _reveal() -> void:
 	tween_fade.tween_callback( func () : shroud.visible = false; revealed.emit() )
 
 func _conceal() -> void:
-	if Engine.is_editor_hint(): return
+	if not is_node_ready(): await ready
 	if tween_fade: tween_fade.kill()
 	tween_fade = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).set_parallel(false)
 	
+	ccp.log_oh("concealing")
 	print("concealing %s" % name)
 	
 	tween_fade.tween_property(shroud, ^"modulate:a", 1., t_fade_out / 2.).set_ease(Tween.EASE_IN)
@@ -126,14 +128,14 @@ func _conceal() -> void:
 
 
 func on_visibility_changed() -> void:
-	if Engine.is_editor_hint(): return
+	#if Engine.is_editor_hint(): return
 	#if not is_node_ready(): return
 	if visible: _reveal()
 	else:
-		shroud.modulate.a = 0.
-		curtain.visible = false
-		content.visible = false
-		shroud.visible = false
+		if shroud: 		shroud.modulate.a 	= 0.
+		if curtain: 		curtain.visible 		= false
+		if content:		content.visible 		= false
+		if shroud:		shroud.visible 		= false
 	
 func _on_viewport_size_changed() -> void:
 	if Engine.is_editor_hint(): return

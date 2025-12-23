@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://crlhmxl8annyj"]
 
-[ext_resource type="Script" uid="uid://coisye2seq5j8" path="res://assets/MainAppLayer/main_app_layer.gd" id="1_l7xc4"]
+[ext_resource type="Script" uid="uid://c6fyt1n717mvo" path="res://addons/ecm_main_app_layer/main_app_layer.gd" id="1_l7xc4"]
 
 [node name="MainAppLayer" type="Control" groups=["MainAppLayer"]]
 layout_mode = 3
@@ -12,7 +12,6 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l7xc4")
-render_size = Vector2i(1280, 720)
 
 [node name="Curtain" type="ColorRect" parent="."]
 layout_mode = 1
@@ -21,10 +20,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -640.0
-offset_top = -360.0
-offset_right = 640.0
-offset_bottom = 360.0
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.136673, 0.166424, 0.171429, 1)
@@ -38,10 +37,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -640.0
-offset_top = -360.0
-offset_right = 640.0
-offset_bottom = 360.0
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -55,10 +54,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -640.0
-offset_top = -360.0
-offset_right = 640.0
-offset_bottom = 360.0
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
