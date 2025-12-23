@@ -14,9 +14,18 @@ signal concealed
 @export var t_fade_out: float = 1.
 
 
-var curtain: ColorRect
-var content: Control
-var shroud: ColorRect
+var curtain: ColorRect:
+	get:
+		if not curtain: curtain = $Curtain
+		return curtain
+var content: Control:
+	get:
+		if not content: content = $Content
+		return content
+var shroud: ColorRect:
+	get:
+		if not shroud: shroud = $Shroud
+		return shroud
 	
 var tween_fade: Tween
 
@@ -92,7 +101,7 @@ func _physics_process(_delta: float) -> void:
 
 func _reveal() -> void:
 	if Engine.is_editor_hint(): return
-	mio.strike_tween(tween_fade)
+	if tween_fade: tween_fade.kill()
 	tween_fade = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).set_parallel(false)
 	
 	print("revealing %s" % name)
@@ -105,7 +114,7 @@ func _reveal() -> void:
 
 func _conceal() -> void:
 	if Engine.is_editor_hint(): return
-	mio.strike_tween(tween_fade)
+	if tween_fade: tween_fade.kill()
 	tween_fade = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).set_parallel(false)
 	
 	print("concealing %s" % name)
@@ -118,7 +127,7 @@ func _conceal() -> void:
 
 func on_visibility_changed() -> void:
 	if Engine.is_editor_hint(): return
-	if not is_node_ready(): return
+	#if not is_node_ready(): return
 	if visible: _reveal()
 	else:
 		shroud.modulate.a = 0.
