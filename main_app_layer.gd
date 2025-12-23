@@ -91,6 +91,7 @@ func _ready() -> void:
 		shroud.modulate.a = 1.
 	
 	if not visibility_changed.is_connected(on_visibility_changed): visibility_changed.connect(on_visibility_changed)
+	if visible: _reveal()
 	
 	get_viewport().size_changed.connect(_on_viewport_size_changed)
 	_on_viewport_size_changed()
