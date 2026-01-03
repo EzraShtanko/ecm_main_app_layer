@@ -8,6 +8,8 @@ signal concealed
 
 @export_tool_button("Post Reconfig", "CheckBox") var action_post_reconfig: Callable = func() : reconfig.post()
 
+@export var has_curtain: bool = true
+@export var has_shroud: bool = true
 @export var render_size: Vector2i = Vector2i(1920, 1080):
 	set(v): render_size = v; reconfig.post()
 @export var t_fade_in: float = 1.
@@ -50,16 +52,17 @@ func _ready() -> void:
 	ccp.flag_bold	= true
 	ccp.color		= "orange"
 	
-	if not get_children().any( func (x: Node) : return (x is ColorRect) and x.name == "Curtain"):
-		var nc := ColorRect.new()
-		add_child(nc)
-		await get_tree().create_timer(0.1).timeout
-		nc.owner 			= self
-		nc.name 				= "Curtain"
-		nc.color 			= Color.BLACK
-		curtain 				= nc
-	else: curtain = $Curtain
-			
+	if has_curtain:
+		if not get_children().any( func (x: Node) : return (x is ColorRect) and x.name == "Curtain"):
+			var nc := ColorRect.new()
+			add_child(nc)
+			await get_tree().create_timer(0.1).timeout
+			nc.owner 			= self
+			nc.name 				= "Curtain"
+			nc.color 			= Color.BLACK
+			curtain 				= nc
+		else: curtain = $Curtain
+	
 	if not get_children().any( func (x: Node) : return (x is Control) and x.name == "Content"):
 		var nc: Control = Control.new()
 		add_child(nc)
@@ -69,15 +72,16 @@ func _ready() -> void:
 		content 				= nc
 	else: content = $Content
 	
-	if not get_children().any( func (x: Node) : return (x is Control) and x.name == "Shroud"):
-		var nc := ColorRect.new()
-		add_child(nc)
-		await get_tree().create_timer(0.1).timeout
-		nc.owner 			= self
-		nc.name 				= "Shroud"
-		nc.color 			= Color.BLACK
-		shroud				= nc
-	else: shroud = $Shroud
+	if has_shroud:
+		if not get_children().any( func (x: Node) : return (x is Control) and x.name == "Shroud"):
+			var nc := ColorRect.new()
+			add_child(nc)
+			await get_tree().create_timer(0.1).timeout
+			nc.owner 			= self
+			nc.name 				= "Shroud"
+			nc.color 			= Color.BLACK
+			shroud				= nc
+		else: shroud = $Shroud
 	
 	for i: Control in [curtain, content, shroud]:
 		i.anchor_top		= 0.5

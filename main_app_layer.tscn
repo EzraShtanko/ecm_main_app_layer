@@ -12,6 +12,8 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l7xc4")
+has_curtain = null
+has_shroud = null
 
 [node name="Curtain" type="ColorRect" parent="."]
 layout_mode = 1
