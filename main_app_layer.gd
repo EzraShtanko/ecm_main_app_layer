@@ -111,6 +111,7 @@ func _reveal() -> void:
 	tween_fade = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).set_parallel(false)
 	
 	ccp.log_oh("revealing")
+	shroud.modulate.a = 0.
 	visible = true
 	shroud.visible = true
 	tween_fade.tween_property(shroud, ^"modulate:a", 1., t_fade_in / 2.)
