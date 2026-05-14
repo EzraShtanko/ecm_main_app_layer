@@ -126,6 +126,7 @@ func _conceal() -> void:
 	ccp.log_oh("concealing")
 	print("concealing %s" % name)
 	
+	shroud.visible = true
 	tween_fade.tween_property(shroud, ^"modulate:a", 1., t_fade_out / 2.).set_ease(Tween.EASE_IN)
 	tween_fade.tween_callback( func () : curtain.visible = false; content.visible = false )
 	tween_fade.tween_property(shroud, ^"modulate:a", 0., t_fade_out / 2.).set_ease(Tween.EASE_IN)
